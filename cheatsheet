@@ -1,0 +1,8 @@
+vboxmanage hostonlyif create
+vboxmanage hostonlyif ipconfig vboxnet0 --ip 192.168.56.1
+vboxmanage hostonlyif remove vboxnet0
+vboxmanage dhcpserver add --ifname vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.0 --lowerip 192.168.56.100 --upperip 192.168.56.200
+vboxmanage dhcpserver modify --ifname vboxnet0 --enable
+
+vboxmanage modifyvm <VMNAME> --nic1 hostonly
+vboxmanage modifyvm <VMNAME> --hostonlyadapter1 vboxnet0

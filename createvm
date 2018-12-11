@@ -1,0 +1,9 @@
+#!/bin/bash
+VM_NAME=$1
+VM_IMAGE=$2
+CLOUD_INIT_CONF=$3
+vboxmanage import /d/vms/bionic-server-cloudimg-amd64.ova --vsys 0 --vmname $VM_NAME
+vboxmanage storageattach $VM_NAME --storagectl "IDE" --port 0 --device 0 --type dvddrive --medium /home/mobme/repo/provisioning/cloud-init/seed.iso
+vboxmanage modifyvm $VM_NAME --uart1 0x3f8 4 --uart2 0x2f8 3 --uartmode1 disconnected
+vboxmanage modifyvm $VM_NAME --hostonlyadapter1 vboxnet0
+vboxmanage modifyvm $VM_NAME --nic1 hostonly
